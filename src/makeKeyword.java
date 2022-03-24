@@ -15,9 +15,9 @@ import org.xml.sax.SAXException;
 
 import java.io.File;
 public class makeKeyword { // generates index.html file from collection.xml file using kkma libarary.
-    public  void makeKeyword() {
+    public  void makeKeyword(String path) {
         try{
-            File XmlFile = new File("./SimpleIR/collection.xml");
+            File XmlFile = new File(path);
             DocumentBuilderFactory dbfactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbfactory.newDocumentBuilder();
             Document doc = dBuilder.parse(XmlFile);

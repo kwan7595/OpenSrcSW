@@ -9,13 +9,13 @@ import javax.xml.transform.stream.StreamResult;
 import org.jsoup.Jsoup;
 import org.w3c.dom.Document;
 public class makeCollection {
-    public void makeCollection() throws ParserConfigurationException, IOException, TransformerException {
+    public void makeCollection(String datapath) throws ParserConfigurationException, IOException, TransformerException {
         //creating docfactKry, docbuilder
         javax.xml.parsers.DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
         javax.xml.parsers.DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
         
         File[] filelist; // get filelists
-        String path = "./SimpleIR/docs/2주차 실습 html";
+        String path = datapath;
         filelist = makeFileList(path);
         int n = filelist.length;
         //making new xml files with DOM

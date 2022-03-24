@@ -11,12 +11,12 @@ import java.util.HashMap;
 import java.util.StringTokenizer;
 
 public class indexer {
-    public void indexer() throws IOException {
+    public void indexer(String path) throws IOException {
         HashMap<String, ArrayList<Double>> weighthash = new HashMap<>(); // hash map for weight
         HashMap<String, ArrayList<Integer>> tf = new HashMap<>(); //hash map for term frequency / document
         HashMap<String, Integer> df = new HashMap<>();
         try{
-            File XmlFile = new File("./SimpleIR/index.xml");
+            File XmlFile = new File(path);
             DocumentBuilderFactory dbfactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder dBuilder = dbfactory.newDocumentBuilder();
             Document doc = dBuilder.parse(XmlFile);

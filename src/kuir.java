@@ -1,24 +1,23 @@
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
-import java.io.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
+import java.io.IOException;
 
 public class kuir {
-    public static void main(String[] args) throws ParserConfigurationException, IOException, TransformerException, ClassNotFoundException {
+    public static void main(String[] args) throws ParserConfigurationException, IOException, TransformerException {
+        String command = args[0];
+        String path = args[1];
 
-            FileInputStream filestream = new FileInputStream("./SimpleIR/index.post");
-            ObjectInputStream o= new ObjectInputStream(filestream);
-
-            Object object = o.readObject();
-            o.close();
-            HashMap hashMap = (HashMap)object;
-            Iterator<String> it = hashMap.keySet().iterator();
-            while(((Iterator<?>) it).hasNext()){
-                String key = it.next();
-                ArrayList<Double> val = (ArrayList<Double>)hashMap.get(key);
-                System.out.println(key + "->"+val);
-            }
+        if(command.equals("-c")){
+            makeCollection collection = new makeCollection();
+            collection.makeCollection(path);
+        }
+        else if(command.equals("-k")){
+            makeKeyword keyword = new makeKeyword();
+            keyword.makeKeyword(path);
+        }
+        else if(command.equals("-i")){
+            indexer index = new indexer();
+            index.indexer(path);
+        }
     }
 }
