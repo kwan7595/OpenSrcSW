@@ -1,17 +1,20 @@
 # OpenSrcSW
 OpenSourceSW 2022-1.
 파일 구조
--------------------
-├── README.md
-├── .idea/libraries
-│ └──libraries
-│   └──jsoup_1_14_3.xml
-│   └──kkma_2_1.xml
+```bash
+├── data
+│   ├── 떡.html
+│   ├── 라면.html
+│   ├── 아이스크림.html
+│   ├── 초밥.html
+│   └── 파스타.html
+├── output
+│   ├── collection.xml
+│   ├── index.post
+│   └── index.xml
 └── src
-  ├── kuir.java
-  ├── makeCollection.java
-  └── makeKeyword.java
-└──output
-  └──collection.xml
-  └──index.post
-  └──index.xml
+    ├── indexer.java
+    ├── kuir.java
+    ├── makeCollection.java
+    └── makeKeyword.java
+```
