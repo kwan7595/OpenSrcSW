@@ -2,6 +2,10 @@
 OpenSourceSW 2022-1.
 파일 구조
 ```bash
+├── .idea/
+│   ├──libraries
+│   │   ├──jsoup_1_14_3.xml
+│   │   ├──kkma_2_1.xml
 ├── data
 │   ├── 떡.html
 │   ├── 라면.html
