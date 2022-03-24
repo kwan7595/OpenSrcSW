@@ -43,7 +43,7 @@ public class makeCollection {
         transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
 
         DOMSource source = new DOMSource(document);
-        StreamResult result = new StreamResult(new FileOutputStream(new File("./SimpleIR/collection.xml")));
+        StreamResult result = new StreamResult(new FileOutputStream(new File("./output/collection.xml")));
 
         transformer.transform(source,result);
     }

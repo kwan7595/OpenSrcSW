@@ -61,7 +61,7 @@ public class makeKeyword { // generates index.html file from collection.xml file
         Transformer transformer = transformerFactory.newTransformer();
         transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
         DOMSource source = new DOMSource(document);
-        StreamResult result = new StreamResult(new FileOutputStream(new File("./SimpleIR/index.xml")));
+        StreamResult result = new StreamResult(new FileOutputStream(new File("./output/index.xml")));
         transformer.transform(source,result);
     }
 }

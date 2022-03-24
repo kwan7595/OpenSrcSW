@@ -74,7 +74,7 @@ public class indexer {
         } catch (SAXException e) {
             e.printStackTrace();
         }
-        FileOutputStream filestream = new FileOutputStream("./SimpleIR/index.post");
+        FileOutputStream filestream = new FileOutputStream("./output/index.post");
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(filestream);
         objectOutputStream.writeObject(weighthash);
     }
