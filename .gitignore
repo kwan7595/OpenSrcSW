@@ -1,0 +1,5 @@
+##ignore these files
+./idea
+../out
+./SimpleIR/docs
+./SimpleIR/*.xml
