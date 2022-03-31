@@ -13,9 +13,8 @@ import java.lang.reflect.Array;
 import java.util.*;
 public class searcher{
     HashMap<String,Integer> Query = new HashMap<>();
-    public void searcher(String path) throws IOException, ClassNotFoundException, ParserConfigurationException, SAXException {
-        Scanner s = new Scanner(System.in);
-        String QueryString = s.nextLine();
+    public void searcher(String path,String q) throws IOException, ClassNotFoundException, ParserConfigurationException, SAXException {
+        String QueryString = q;
         Query=ExtractKeyword(QueryString); //create query vector
         HashMap<String,ArrayList<Double>> weightHash = readInvertedFile(path); // read inverted file and get weight HashMap
         HashMap<String,Double> queryDocSimilarity=CalcSim(weightHash,Query); //calculates similarity of query and each document
