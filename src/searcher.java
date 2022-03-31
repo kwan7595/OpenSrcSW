@@ -13,8 +13,9 @@ import java.lang.reflect.Array;
 import java.util.*;
 public class searcher{
     HashMap<String,Integer> Query = new HashMap<>();
-    public void searcher(String path,String q) throws IOException, ClassNotFoundException, ParserConfigurationException, SAXException {
-        String QueryString = q;
+    public void searcher(String path) throws IOException, ClassNotFoundException, ParserConfigurationException, SAXException {
+        Scanner s = new Scanner(System.in);
+        String QueryString = s.nextLine();
         Query=ExtractKeyword(QueryString); //create query vector
         HashMap<String,ArrayList<Double>> weightHash = readInvertedFile(path); // read inverted file and get weight HashMap
         HashMap<String,Double> queryDocSimilarity=CalcSim(weightHash,Query); //calculates similarity of query and each document
@@ -41,39 +42,30 @@ public class searcher{
         objectInputStream.close();
         return (HashMap)object;
     }
-    public HashMap<String, Double> CalcSim(HashMap _InnerProduct,){
-        HashMap<String,Double> InnerProduct = _InnerProduct;
-
-    }
     public HashMap<String, Double> CalcSim(HashMap _weightHash,HashMap _Query) throws ParserConfigurationException, IOException, SAXException {
         HashMap<String,ArrayList<Double>> weightHash = _weightHash; //initializes hashmap format
         HashMap<String,Integer> Query = _Query;
-        HashMap<String,Double> InnerProduct = InnerProduct(weightHash,Query);
         ArrayList<String> doctitle=getDocumentTitle("./output/collection.xml");
         HashMap<String,Double> queryDocSim = new HashMap<>(); //total similarity vector.
-        double QuerySize = 0.0;
-        double DocVecSize = 0.0;
         for(int i=0;i<doctitle.size();i++){
+            //System.out.printf("%s\n",doctitle.get(i));
             queryDocSim.put(doctitle.get(i),0.0); //initialize querydocsim hashmap with title,0.0
+            //System.out.printf("%f\n",queryDocSim.get(doctitle.get(i)));
         }
         Iterator<String> it = Query.keySet().iterator();
-        while(it.hasNext()){ //calculate querysize
-            String key = it.next();
-            QuerySize += Query.get(key)*Query.get(key);
-        }
         while(it.hasNext()){
             String key = it.next(); //keyword
             int tf = Query.get(key); //TF
+            //System.out.printf("key:%s,tf:%d\n",key,tf);
             int ndoc=0;
             ndoc = weightHash.get(key).size();
             ArrayList<Double> docweight = weightHash.get(key);
             for(int i=0;i<ndoc;i++){ //accumulates similarity value based on keyword.
-                DocVecSize += docweight.get(i)*docweight.get(i); //calculate document vector size
+                double sum = queryDocSim.get(doctitle.get(i));
+                System.out.printf("pasta in doc %d=%f\n",i,docweight.get(i));
+                sum+=tf*docweight.get(i); //calculates similaryty. querydoc[id] = tf*w. accumulates calculated value(multiple words)
+                queryDocSim.put(doctitle.get(i),sum);
             }
-            double sim = 0.0;
-            if(QuerySize==0||DocVecSize==0) sim = 0.0;
-            else sim = (InnerProduct.get(key))/((Math.sqrt(QuerySize))*(Math.sqrt(DocVecSize)));
-            queryDocSim.put(key,sim);
         }
         return queryDocSim;
     }
@@ -99,8 +91,9 @@ public class searcher{
         keySet.sort((o1, o2) -> (int) (queryDocSim.get(o2) - queryDocSim.get(o1)));
         int counter=0;
         for (String key : keySet) {
-            if(queryDocSim.get(key)==0.0) System.out.println("검색된 문서가 없습니다");
-            else System.out.println(String.format("Key : %s, Value : %s", key, queryDocSim.get(key)));
+            if(counter==3) break;
+            System.out.println(String.format("Key : %s, Value : %s", key, queryDocSim.get(key)));
+            counter++;
         }
     }
 }
