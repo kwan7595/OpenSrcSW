@@ -62,7 +62,7 @@ public class indexer {
                 for(int i=0;i<N;i++){
                     templist = tf.get(keyword);
                     term_frequency=templist.get(i);
-                    w = term_frequency * Math.log(N/idf); // calculate weight for keyword
+                    w = term_frequency * Math.log(((double)N)/(double)idf); // calculate weight for keyword
                     tempweight.add(w);
                 }
                 weighthash.put(keyword,tempweight); //push weight list to keyword
