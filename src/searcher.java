@@ -61,7 +61,7 @@ public class searcher{
             ArrayList<Double> docweight = weightHash.get(key);
             for(int i=0;i<ndoc;i++){ //accumulates similarity value based on keyword.
                 double sum = queryDocSim.get(doctitle.get(i));
-                System.out.printf("pasta in doc %d=%f\n",i,docweight.get(i));
+                //System.out.printf("pasta in doc %d=%f\n",i,docweight.get(i));
                 sum+=tf*docweight.get(i); //calculates similaryty. querydoc[id] = tf*w. accumulates calculated value(multiple words)
                 queryDocSim.put(doctitle.get(i),sum);
             }
@@ -90,9 +90,8 @@ public class searcher{
         keySet.sort((o1, o2) -> (int) (queryDocSim.get(o2) - queryDocSim.get(o1)));
         int counter=0;
         for (String key : keySet) {
-            if(counter==3) break;
-            System.out.println(String.format("Key : %s, Value : %s", key, queryDocSim.get(key)));
-            counter++;
+            if(queryDocSim.get(key)==0.0) System.out.println("검색된 문서가 없습니다");
+            else System.out.println(String.format("Key : %s, Value : %s", key, queryDocSim.get(key)));
         }
     }
 }
