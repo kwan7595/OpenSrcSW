@@ -48,27 +48,32 @@ public class searcher{
     public HashMap<String, Double> CalcSim(HashMap _weightHash,HashMap _Query) throws ParserConfigurationException, IOException, SAXException {
         HashMap<String,ArrayList<Double>> weightHash = _weightHash; //initializes hashmap format
         HashMap<String,Integer> Query = _Query;
+        HashMap<String,Double> InnerProduct = InnerProduct(weightHash,Query);
         ArrayList<String> doctitle=getDocumentTitle("./output/collection.xml");
         HashMap<String,Double> queryDocSim = new HashMap<>(); //total similarity vector.
+        double QuerySize = 0.0;
+        double DocVecSize = 0.0;
         for(int i=0;i<doctitle.size();i++){
-            //System.out.printf("%s\n",doctitle.get(i));
             queryDocSim.put(doctitle.get(i),0.0); //initialize querydocsim hashmap with title,0.0
-            //System.out.printf("%f\n",queryDocSim.get(doctitle.get(i)));
         }
         Iterator<String> it = Query.keySet().iterator();
+        while(it.hasNext()){ //calculate querysize
+            String key = it.next();
+            QuerySize += Query.get(key)*Query.get(key);
+        }
         while(it.hasNext()){
             String key = it.next(); //keyword
             int tf = Query.get(key); //TF
-            //System.out.printf("key:%s,tf:%d\n",key,tf);
             int ndoc=0;
             ndoc = weightHash.get(key).size();
             ArrayList<Double> docweight = weightHash.get(key);
             for(int i=0;i<ndoc;i++){ //accumulates similarity value based on keyword.
-                double sum = queryDocSim.get(doctitle.get(i));
-                //System.out.printf("pasta in doc %d=%f\n",i,docweight.get(i));
-                sum+=tf*docweight.get(i); //calculates similaryty. querydoc[id] = tf*w. accumulates calculated value(multiple words)
-                queryDocSim.put(doctitle.get(i),sum);
+                DocVecSize += docweight.get(i)*docweight.get(i); //calculate document vector size
             }
+            double sim = 0.0;
+            if(QuerySize==0||DocVecSize==0) sim = 0.0;
+            else sim = (InnerProduct.get(key))/((Math.sqrt(QuerySize))*(Math.sqrt(DocVecSize)));
+            queryDocSim.put(key,sim);
         }
         return queryDocSim;
     }
