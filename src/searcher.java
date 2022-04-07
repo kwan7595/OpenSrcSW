@@ -17,7 +17,7 @@ public class searcher{
         String QueryString = q;
         Query=ExtractKeyword(QueryString); //create query vector
         HashMap<String,ArrayList<Double>> weightHash = readInvertedFile(path); // read inverted file and get weight HashMap
-        HashMap<String,Double> queryDocSimilarity=Calcsim(weightHash,Query); //calculates similarity of query and each document
+        HashMap<String,Double> queryDocSimilarity=CalcSim(weightHash,Query); //calculates similarity of query and each document
         simRanking(queryDocSimilarity);
     }
     public HashMap<String,Integer> ExtractKeyword(String str){ //creates query vector(hashmap)
@@ -59,8 +59,11 @@ public class searcher{
             while (it.hasNext()) {
                 String key = it.next();
                 if (i == 0) QuerySize += Query.get(key) * Query.get(key);
-                double weight = weightHash.get(key).get(i);
-                DocVecSize += weight * weight;
+                if(weightHash.get(key)!=null) {
+                    double weight = weightHash.get(key).get(i);
+                    DocVecSize += weight * weight;
+                }
+                else DocVecSize+=0.0;
             }
             if (QuerySize == 0 || DocVecSize == 0) sim = 0.0;
             else sim = (InnerProduct.get(doctitle.get(i))) / ((Math.sqrt(QuerySize)) * (Math.sqrt(DocVecSize)));
@@ -83,13 +86,12 @@ public class searcher{
             String key = it.next(); //keyword
             int tf = Query.get(key); //TF
             //System.out.printf("key:%s,tf:%d\n",key,tf);
-            int ndoc=0;
-            ndoc = weightHash.get(key).size();
             ArrayList<Double> docweight = weightHash.get(key);
-            for(int i=0;i<ndoc;i++){ //accumulates similarity value based on keyword.
+            for(int i=0;i<doctitle.size();i++){ //accumulates similarity value based on keyword.
                 double sum = queryDocSim.get(doctitle.get(i));
                 //System.out.printf("pasta in doc %d=%f\n",i,docweight.get(i));
-                sum+=tf*docweight.get(i); //calculates similaryty. querydoc[id] = tf*w. accumulates calculated value(multiple words)
+                if(docweight!=null)sum+=tf*docweight.get(i); //calculates similaryty. querydoc[id] = tf*w. accumulates calculated value(multiple words)
+                else sum+=0; // if word is not in any of documents
                 queryDocSim.put(doctitle.get(i),sum);
             }
         }
