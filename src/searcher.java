@@ -17,7 +17,7 @@ public class searcher{
         String QueryString = q;
         Query=ExtractKeyword(QueryString); //create query vector
         HashMap<String,ArrayList<Double>> weightHash = readInvertedFile(path); // read inverted file and get weight HashMap
-        HashMap<String,Double> queryDocSimilarity=InnerProduct(weightHash,Query); //calculates similarity of query and each document
+        HashMap<String,Double> queryDocSimilarity=Calcsim(weightHash,Query); //calculates similarity of query and each document
         simRanking(queryDocSimilarity);
     }
     public HashMap<String,Integer> ExtractKeyword(String str){ //creates query vector(hashmap)
