@@ -41,6 +41,10 @@ public class searcher{
         objectInputStream.close();
         return (HashMap)object;
     }
+    public HashMap<String, Double> CalcSim(HashMap _InnerProduct,){
+        HashMap<String,Double> InnerProduct = _InnerProduct;
+
+    }
     public HashMap<String, Double> CalcSim(HashMap _weightHash,HashMap _Query) throws ParserConfigurationException, IOException, SAXException {
         HashMap<String,ArrayList<Double>> weightHash = _weightHash; //initializes hashmap format
         HashMap<String,Integer> Query = _Query;
