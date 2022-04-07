@@ -17,7 +17,7 @@ public class searcher{
         String QueryString = q;
         Query=ExtractKeyword(QueryString); //create query vector
         HashMap<String,ArrayList<Double>> weightHash = readInvertedFile(path); // read inverted file and get weight HashMap
-        HashMap<String,Double> queryDocSimilarity=CalcSim(weightHash,Query); //calculates similarity of query and each document
+        HashMap<String,Double> queryDocSimilarity=InnerProduct(weightHash,Query); //calculates similarity of query and each document
         simRanking(queryDocSimilarity);
     }
     public HashMap<String,Integer> ExtractKeyword(String str){ //creates query vector(hashmap)
@@ -39,9 +39,9 @@ public class searcher{
         ObjectInputStream objectInputStream = new ObjectInputStream(filestream);
         Object object = objectInputStream.readObject();
         objectInputStream.close();
-        return (HashMap)object;
+        return (HashMap) object;
     }
-    public HashMap<String, Double> CalcSim(HashMap _weightHash,HashMap _Query) throws ParserConfigurationException, IOException, SAXException {
+    public HashMap<String, Double> InnerProduct(HashMap _weightHash,HashMap _Query) throws ParserConfigurationException, IOException, SAXException {
         HashMap<String,ArrayList<Double>> weightHash = _weightHash; //initializes hashmap format
         HashMap<String,Integer> Query = _Query;
         ArrayList<String> doctitle=getDocumentTitle("./output/collection.xml");
