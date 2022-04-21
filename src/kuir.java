@@ -32,6 +32,16 @@ public class kuir {
                     System.out.println("질의어를 입력해주세요");
                 }
             }
+            case "-m" ->{
+                if(Objects.equals(args[2], "-q")) {
+                    String q = args[3];
+                    MidTerm midterm = new MidTerm();
+                    midterm.showSnippet(path,q);
+                }
+                else{
+                    System.out.println("질의어를 입력해주세요");
+                }
+            }
         }
     }
 }

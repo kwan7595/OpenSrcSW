@@ -22,7 +22,7 @@ public class indexer {
             Document doc = dBuilder.parse(XmlFile);
             doc.getDocumentElement().normalize();
             NodeList nList = doc.getElementsByTagName("doc"); // read documents form index.xml file
-            for(int temp=0;temp<nList.getLength();temp++) {
+            for(int temp=0;temp<nList.getLength();temp++) { // set tf,df values
                 int id = temp; // document id
                 String str = getText(nList, temp); //get body text into string
                 StringTokenizer keywordParse = new StringTokenizer(str,"#");
@@ -52,7 +52,7 @@ public class indexer {
                     }
                 }
             }
-            for(String keyword:tf.keySet()){
+            for(String keyword:tf.keySet()){ //calculate weightHash value
                 ArrayList<Integer> templist = new ArrayList<>(5);
                 ArrayList<Double> tempweight = new ArrayList<>(5); //list to return weight
                 int N = nList.getLength(); // total number of document
@@ -78,7 +78,8 @@ public class indexer {
         ObjectOutputStream objectOutputStream = new ObjectOutputStream(filestream);
         objectOutputStream.writeObject(weighthash);
     }
-    public  String getText(NodeList nList,int temp){ // get body text into string
+    public  String getText(NodeList nList,int temp) { // get body text into string
         return nList.item(temp).getChildNodes().item(1).getTextContent();
     }
+
 }
