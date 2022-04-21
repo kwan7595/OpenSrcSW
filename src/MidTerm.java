@@ -24,6 +24,7 @@ public class MidTerm {
         Iterator<String> it = documentSnippets.keySet().iterator();
         while(it.hasNext()){
             String key = it.next();
+            System.out.println(key);
             System.out.println(documentSnippets.get(key));
             System.out.println(countMatchRanking(documentSnippets,QueryKeywords));
         }
